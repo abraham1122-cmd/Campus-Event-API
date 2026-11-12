@@ -1,0 +1,29 @@
+
+
+### 1. Get all events
+GET http://localhost:3000/api/events
+
+### 2. Get upcoming events
+GET http://localhost:3000/api/events/upcoming
+
+### 3. Get event with ID 1
+GET http://localhost:3000/api/events/1
+
+### 4. Get sessions belonging to event 1
+GET http://localhost:3000/api/events/1/sessions
+
+### 5. Get session 2 belonging to event 1
+GET http://localhost:3000/api/events/1/sessions/2
+
+### 6. Create a new event
+POST http://localhost:3000/api/events
+Content-Type: application/json
+
+{
+  "title": "Programming Workshop",
+  "description": "A practical programming workshop for students.",
+  "location": "Computer Lab 2",
+  "eventDate": "2026-12-15",
+  "category": "Technology",
+  "isPublished": true
+}
