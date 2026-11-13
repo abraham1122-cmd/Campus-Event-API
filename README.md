@@ -124,3 +124,21 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+
+
+
+//
+
+1 {"message":"Event 6 not found","error":"Not Found","statusCode":404}
+
+//post
+
+2 HTTP/1.1 201 Created
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 198
+ETag: W/"c6-P5Gdw4ep9P81TYgeMYGB0w3gXHU"
+Date: Fri, 13 Nov 2026 13:04:00 GMT
+Connection: close

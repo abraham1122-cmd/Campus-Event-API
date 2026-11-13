@@ -1,144 +1,151 @@
 
-
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import type { Event, Session } from './events.type.js';
-import { CreateEventDto } from './dto/create-event.dto.js';
+import type { CreateEventDto } from './dto/create-event.dto.js';
+import type { EventQueryDto } from './dto/event-query.dto.js';
 
 @Injectable()
 export class EventsService {
 
-    private events: Event[] = [
+  private events: Event[] = [
+    {
+      id: 1,
+      title: 'Technology',
+      description: 'Technology events which every talented guy will participate on freely',
+      location: 'Addis Ababa',
+      eventDate: '2027-10-12',
+      category: 'Technology',
+      isPublished: false,
+    },
+    {
+      id: 2,
+      title: 'Science and Technology',
+      description: 'Science and Technology events which every talented guy will participate on freely',
+      location: 'Mexico',
+      eventDate: '2026-12-12',
+      category: 'Science and Technology',
+      isPublished: true,
+    },
+    {
+      id: 3,
+      title: 'Shopping',
+      description: '11th Shopping of books',
+      location: 'Addis Ababa University',
+      eventDate: '2026-11-12',
+      category: 'Shopping',
+      isPublished: true,
+    },
+    {
+      id: 4,
+      title: 'Welcoming for new students',
+      description: 'Very hot and pleasant welcoming program for fresh students',
+      location: 'IBT',
+      eventDate: '2026-11-30',
+      category: 'welcoming',
+      isPublished: false,
+    },
+    {
+      id: 5,
+      title: '30 years of anniversary',
+      description: '30th anniversary of our incredible journey',
+      location: 'Addis Ababa Science and Technology',
+      eventDate: '2027-10-12',
+      category: 'celebration',
+      isPublished: true,
+    },
+  ];
 
-        {
-            id: 1,
-            title: "Technology",
-            description: "Technology events which every talented guy will participate on freely",
-            location: "Addis Ababa",
-            eventDate: "10-12-2027",
-            category: "Technology",
-            isPublished: false,
+  private sessions: Session[] = [
+    {
+      id: 1,
+      eventId: 1,
+      title: 'Technology keynote',
+      startAt: '2026-12-10T09:00:00',
+      endAt: '2026-12-10T12:00:00',
+      room: '00 hall',
+    },
+    {
+      id: 2,
+      eventId: 1,
+      title: 'Event keynote',
+      startAt: '2026-12-21T09:00:00',
+      endAt: '2026-12-21T12:00:00',
+      room: '003 hall',
+    },
+    {
+      id: 3,
+      eventId: 2,
+      title: 'Welcoming keynote',
+      startAt: '2026-11-20T09:00:00',
+      endAt: '2026-11-20T12:00:00',
+      room: '005 hall',
+    },
+    {
+      id: 4,
+      eventId: 2,
+      title: 'Science and technology keynote',
+      startAt: '2027-01-10T09:00:00',
+      endAt: '2027-01-10T12:00:00',
+      room: 'Science hall',
+    },
+  ];
 
+  
+  findAll(query: EventQueryDto): Event[] {
+    const {
+      category,
+      location,
+      isPublished,
+      sortBy,
+      order = 'asc',
+      page = 1,
+      limit = 5,
+    } = query;
 
-        },
+    
+    const filteredEvents = this.events.filter((event) => {
+      const matchesCategory =
+        !category ||
+        event.category.toLowerCase().includes(category.toLowerCase());
 
-       
-        {
-            id: 2,
-            title: "Science and Technology",
-            description: "Science and Technology events which every talented guy will participate on freely",
-            location: "Mexico",
-            eventDate: "12-12-2026",
-            category: "Science and Technology",
-            isPublished: true,
+      const matchesLocation =
+        !location ||
+        event.location.toLowerCase().includes(location.toLowerCase());
 
+      const matchesPublished =
+        isPublished === undefined ||
+        event.isPublished === isPublished;
 
-        },
+      return (
+        matchesCategory &&
+        matchesLocation &&
+        matchesPublished
+      );
+    });
 
+ 
+    const sortedEvents = [...filteredEvents];
 
+    if (sortBy) {
+      sortedEvents.sort((a, b) => {
+        const comparison =
+          sortBy === 'title'
+            ? a.title.localeCompare(b.title)
+            : a.eventDate.localeCompare(b.eventDate);
 
-        
-        {
-            id: 3,
-            title: "Shopping",
-            description: "11th Shopping of books ",
-            location: "Addis Ababa University",
-            eventDate: "11-12-2026",
-            category: "Shopping",
-            isPublished: true,
+        return order === 'desc' ? -comparison : comparison;
+      });
+    }
 
+   
+    const offset = (page - 1) * limit;
+    const start = offset;
+    const end = start + limit;
 
-        },
+    const items = sortedEvents.slice(start, end);
 
-
-        
-        {
-            id: 4,
-            title: "Welcoming for new students",
-            description: "very hot and pleasure welcoming program for fresh students",
-            location: "IBT",
-            eventDate: "11-30-2026",
-            category: "welcoming",
-            isPublished: false,
-
-
-        },
-
-
-        
-        {
-            id: 5,
-            title: "30 years of anversary",
-            description: " 30th unversary of our incredible journey",
-            location: "Addis Ababa science and Technology",
-            eventDate: "10-12-2027",
-            category: "celebration",
-            isPublished: true,
-
-
-        },
-
-
-
-    ]
-
-
-
-    private sessions: Session[] = [
-
-        {
-           id: 1,
-           eventId: 1,
-           title: "technology keynote",
-           startAt: "12-10-2026",
-           endAt: "12-15-2026",
-           room: "00 hall",
-
-        },
-
-
-
-          {
-           id: 2,
-           eventId: 1,
-           title: "event keynote",
-           startAt: "21-12-2026",
-           endAt: "28-12-2026",
-           room: "003 hall",
-
-        },
-
-
-
-          {
-           id: 3,
-           eventId: 2,
-           title: "welcoming keynote",
-           startAt: "11-20-2026",
-           endAt: "11-25-2026",
-           room: "005 hall",
-
-        },
-
-
-          {
-           id: 4,
-           eventId: 2,
-           title: "science and teck keynote",
-           startAt: "1-10-2027",
-           endAt: "1-10-2027",
-           room: "science hall",
-
-        },
-    ];
-
-
-
-
-
-    findAll(): Event[] {
-    return this.events;
+    return items;
   }
 
   findUpcoming(): Event[] {
@@ -150,7 +157,7 @@ export class EventsService {
     ].join('-');
 
     return this.events.filter(
-      (event) => event.eventDate.slice(0, 10) >= todayString,
+      (event) => event.eventDate >= todayString,
     );
   }
 
@@ -201,11 +208,4 @@ export class EventsService {
 
     return newEvent;
   }
-
-
-
-
 }
-
-
-  

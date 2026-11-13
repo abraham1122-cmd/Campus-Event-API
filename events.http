@@ -24,6 +24,6 @@ Content-Type: application/json
   "description": "A practical programming workshop for students.",
   "location": "Computer Lab 2",
   "eventDate": "2026-12-15",
-  "category": "Technology",
+  "category": "Technology 1",
   "isPublished": true
 }
