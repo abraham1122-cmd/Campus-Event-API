@@ -7,29 +7,45 @@ import {
   Param,
   Query,
   ParseIntPipe,
+  
 } from '@nestjs/common';
 
 import { EventsService } from './events.service.js';
 import { CreateEventDto } from './dto/create-event.dto.js';
 import { EventQueryDto } from './dto/event-query.dto.js';
+import { UseGuards } from '@nestjs/common';
+import { roleGaurds } from '../auth/auth.guard.js';
 
+
+
+
+@UseGuards(roleGaurds)
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
-  // GET /api/events
-  // Supports filtering, sorting and pagination
+  
   @Get()
-  findAll(@Query() query: EventQueryDto) {
+  findAll(@Query() query: EventQueryDto
+          ) {
+            
     return this.eventsService.findAll(query);
   }
-
-  // GET /api/events/upcoming
-  // Keep this route before @Get(':id')
+  
   @Get('upcoming')
   findUpcoming() {
     return this.eventsService.findUpcoming();
   }
+
+
+  // @Get()
+  // findAll(@Req() req: Request){
+  //   console.log(req["user"])
+
+  //   return this.eventsService.findAll()
+
+
+  
 
   // GET /api/events/:id
   @Get(':id')
