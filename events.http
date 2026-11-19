@@ -1,7 +1,13 @@
 
 
 ### 1. Get all events
+
 GET http://localhost:3000/api/events
+
+### Get events on page 2
+
+GET  http://localhost:3000/api/events?page=2&limit=5
+
 
 ### 2. Get upcoming events
 GET http://localhost:3000/api/events/upcoming

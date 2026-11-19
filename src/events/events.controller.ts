@@ -19,12 +19,11 @@ import { roleGaurds } from '../auth/auth.guard.js';
 
 
 
-@UseGuards(roleGaurds)
+
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
-  
   @Get()
   findAll(@Query() query: EventQueryDto
           ) {
@@ -32,6 +31,9 @@ export class EventsController {
     return this.eventsService.findAll(query);
   }
   
+  // @Get('upcoming')
+  // findUpcoming()
+
   @Get('upcoming')
   findUpcoming() {
     return this.eventsService.findUpcoming();
@@ -69,6 +71,7 @@ export class EventsController {
   }
 
   // POST /api/events
+  @UseGuards(roleGaurds)
   @Post()
   create(@Body() dto: CreateEventDto) {
     return this.eventsService.create(dto);
