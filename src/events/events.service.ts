@@ -196,16 +196,19 @@ export class EventsService {
     return session;
   }
 
-  create(dto: CreateEventDto): Event {
-    const newEvent: Event = {
-      id: this.events.length
-        ? Math.max(...this.events.map((event) => event.id)) + 1
-        : 1,
-      ...dto,
-    };
+  create(dto: CreateEventDto) {
+  const newId =
+    this.events.length > 0
+      ? Math.max(...this.events.map((event) => event.id)) + 1
+      : 1;
 
-    this.events.push(newEvent);
+  const newEvent = {
+    ...dto,
+    id: newId,
+  };
 
-    return newEvent;
-  }
+  this.events.push(newEvent);
+
+  return newEvent;
+}
 }

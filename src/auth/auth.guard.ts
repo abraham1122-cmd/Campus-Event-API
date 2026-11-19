@@ -16,7 +16,7 @@ export class roleGaurds implements CanActivate{
         const user = request.user;
 
 
-        if(!user || !user.email || !user.id || !user.role){
+        if(!user.email || !user.id || !user.role){
             throw new UnauthorizedException("Not authorized");
         }
 

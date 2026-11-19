@@ -71,9 +71,19 @@ export class EventsController {
   }
 
   // POST /api/events
-  @UseGuards(roleGaurds)
+  // @UseGuards(roleGaurds)
+  // @Post()
+  // create(@Body() dto: CreateEventDto) {
+  //   return this.eventsService.create(dto);
+  // }
+
   @Post()
-  create(@Body() dto: CreateEventDto) {
-    return this.eventsService.create(dto);
-  }
+create(@Body() dto: CreateEventDto) {
+  console.log("Received event DTO:", dto);
+  console.log("Received eventDate:", dto.eventDate);
+  console.log("eventDate type:", typeof dto.eventDate);
+
+  return this.eventsService.create(dto);
+}
+
 }
