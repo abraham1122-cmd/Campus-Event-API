@@ -2,27 +2,27 @@
 
 ### 1. Get all events
 
-GET http://localhost:3000/api/events
+GET http://localhost:3001/api/events
 
 ### Get events on page 2
 
-GET  http://localhost:3000/api/events?page=2&limit=5
+GET  http://localhost:3001/api/events?page=2&limit=5
 
 
 ### 2. Get upcoming events
-GET http://localhost:3000/api/events/upcoming
+GET http://localhost:3001/api/events/upcoming
 
 ### 3. Get event with ID 1
-GET http://localhost:3000/api/events/1
+GET http://localhost:3001/api/events/1
 
 ### 4. Get sessions belonging to event 1
-GET http://localhost:3000/api/events/1/sessions
+GET http://localhost:3001/api/events/1/sessions
 
 ### 5. Get session 2 belonging to event 1
-GET http://localhost:3000/api/events/1/sessions/2
+GET http://localhost:3001/api/events/1/sessions/2
 
 ### 6. Create a new event
-POST http://localhost:3000/api/events
+POST http://localhost:3001/api/events
 Content-Type: application/json
 
 {
